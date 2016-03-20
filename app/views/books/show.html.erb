@@ -1,0 +1,61 @@
+<div class="row">
+<div class="col-md-8",   text-align: center;>
+
+<div <div class="container">
+  <div class="book-info">
+ 	
+ 
+	<h2 class="book-title"><mark><%= @book.title  %></mark></h2>
+	<h3 class="book-author"  ><span>From :</span><%= @book.author %></h3>
+	<h2 class="avg-rating">Average Rating</h2>
+			<div class="average-review-rating" data-score=<%= @average_review %>></div>
+			<span class="number-of-reviews">Based on <%= @book.reviews.count %> reviews</span>
+	<h4  class="text-center">Category: <%= @book.category.name %></h4>
+	<p  class="book-desc"><strong><%= @book.description %></strong></p>
+	</div>
+</div>
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-4">
+<div class="reviews">
+
+<%= render  @book.reviews %> 
+<div>
+	<%=link_to"Add Review", new_book_review_path(@book) , class: "btn-custom"%>
+	</div>
+</div>
+</div>
+</div><br>
+
+<div class="links btn-group">
+<%= link_to "Back",root_path , class:"btn btn-custom" %>
+<% if user_signed_in? %>
+<% if @book.user_id==current_user.id %>
+
+
+<%= link_to "EDIT ", edit_book_path(@book) , class:"btn btn-custom" %>
+<%= link_to "Delete", book_path(@book), :method => 'delete', data: {confirm: "Are you sure "} , class:"btn btn-custom" %>
+<% end %>
+<% end %>
+</div>
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	});
+</script>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function() {
+			return $(this).attr('data-score')
+		}
+	});
+</script>
